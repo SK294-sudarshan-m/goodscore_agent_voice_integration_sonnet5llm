@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>GoodScore — Support Agent (AgentCore Demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap%22 rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="voice.css?v=1">
+</head>
+<body>
+<div class="app">
+ 
+  <!-- ============ LEFT: phone / chat ============ -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="brand">
+        <div class="brand-mark">G</div>
+        <div>
+          <div class="brand-name">GoodScore</div>
+          <div class="brand-sub">Support</div>
+        </div>
+      </div>
+      <div class="persona-wrap">
+        <div class="field-item">
+          <label for="userIdInput">User ID</label>
+          <input id="userIdInput" type="text" placeholder="Enter user ID" value="UserID">
+        </div>
+        <div class="field-item">
+          <label for="passcodeInput">Passcode</label>
+          <div class="passcode-wrap">
+            <input id="passcodeInput" type="password" placeholder="Enter passcode">
+            <button type="button" id="togglePasscodeBtn" class="toggle-passcode-btn" title="Toggle Passcode Visibility" aria-label="Toggle Passcode Visibility">
+              <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button id="setUserBtn" class="set-user-btn">Set User</button>
+      </div>
+    </div>
+ 
+    <div class="user-info-card" id="userInfoCard">
+      <div class="info-item"><span class="info-label">User ID:</span><span class="info-value" id="currentUserId">—</span></div>
+      <div class="info-item"><span class="info-label">Session:</span><span class="info-value session-active">Active</span></div>
+    </div>
+ 
+    <div class="phone">
+      <div class="phone-top">
+        <div class="phone-agent">
+          <div class="agent-dot"></div>
+          <div>
+            <div class="agent-name">GoodScore Assistant</div>
+            <div class="agent-status" id="agentStatus">online · powered by Shellkode</div>
+          </div>
+        </div>
+        <button class="reset-btn" id="resetBtn" title="Clear this conversation">Reset</button>
+      </div>
+ 
+      <div class="chat" id="chat"></div>
+ 
+      <div class="suggested" id="suggested"></div>
+ 
+      <div class="composer">
+        <input id="input" type="text" placeholder="Type a message…" autocomplete="off">
+        <button id="send" aria-label="Send">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-8-8 18-2-7-8-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ============ RIGHT: architecture trace ============ -->
+  <div class="trace">
+    <div class="trace-head">
+      <div class="trace-title">Behind the scenes</div>
+      <div class="trace-sub">AgentCore Runtime - with tools</div>
+    </div>
+ 
+ 
+ 
+    <div class="trace-label">Live tool trace</div>
+    <div class="trace-log" id="traceLog">
+      <div class="trace-empty">Send a message to watch the agent decide, call tools, and respond.</div>
+    </div>
+</div>
+ 
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="local.config.js"></script>
+<script src="app.js?v=5"></script>
+<script src="voice.js?v=1"></script>
+</body>
+</html>
