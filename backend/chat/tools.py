@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import random
 import time
 from datetime import datetime, timezone, timedelta
@@ -43,7 +44,12 @@ def _firestore_to_ist(obj: object) -> object:
 # Shared HTTP client — one persistent connection pool for the staging API.
 # Created once at import time; reused across all requests and tool calls.
 # ---------------------------------------------------------------------------
-_STAGE_BASE = "https://subscription.stage.goodscore.io"
+# Additive: GOODSCORE_STAGE_BASE_URL lets a local run point these four
+# tools at a stand-in server (see mock_goodscore_api.py) instead of the
+# real staging API — e.g. for testing without a real staging account.
+# Unset in every existing deployment, so this is byte-for-byte the same
+# default that was hardcoded here before.
+_STAGE_BASE = os.environ.get("GOODSCORE_STAGE_BASE_URL", "https://subscription.stage.goodscore.io")
 
 # Timeout raised to 30 s — staging can be slow on cold starts.
 # connect=5 s prevents hanging forever if the server is unreachable.
