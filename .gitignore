@@ -1,3 +1,7 @@
 # frontend/ is its own separate git repository (remote: shellkodelabs/GoodScoreFE)
 # — intentionally untracked here, not part of this repo's history.
 frontend/
+
+# Local virtualenvs and run logs
+.venv_run/
+voice_server.log
