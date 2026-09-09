@@ -1,14 +1,26 @@
-/* voice.css — styling for the "Talk to Expert" voice entry point.
+/* voice.css — styling for the "Talk to GoodScore Voice Agent" voice entry point.
    New, additive file: reuses the CSS custom properties declared in
    styles.css's :root (--gs-green etc.) rather than redeclaring them, so
    it stays visually identical to the chat theme without touching
    styles.css itself. Every selector here targets elements voice.js
    injects at runtime — nothing here overrides an existing chat rule. */
 
+/* The "Talk to GoodScore Voice Agent" label is long enough that it can
+   overflow phone-top's fixed width alongside the existing agent-name and
+   Reset button — wrap this toggle group onto its own row when that
+   happens, rather than letting it spill past the card. Scoped to
+   .phone-top's *behavior*, not its box (no color/spacing/size changes),
+   and only visibly kicks in once this wider group doesn't fit — it does
+   not affect phone-top's layout in the chat-only path (voice.js not
+   loaded, so voice-toggle-wrap never exists). */
+.phone-top {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
 .voice-toggle-wrap {
   display: flex;
   gap: 6px;
-  margin-left: 14px;
+  margin-left: auto;
   flex-shrink: 0;
 }
 .mode-btn {

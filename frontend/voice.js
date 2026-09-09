@@ -1,4 +1,4 @@
-// voice.js — GoodScore "Talk to Expert" voice entry point.
+// voice.js — GoodScore "Talk to GoodScore Voice Agent" voice entry point.
 //
 // Additive, self-contained script: injects its own toggle button and
 // call panel into the existing phone frame at runtime, reusing the
@@ -30,12 +30,12 @@
   toggleWrap.className = "voice-toggle-wrap";
   toggleWrap.innerHTML =
     '<button type="button" id="chatModeBtn" class="mode-btn active">💬 Chat</button>' +
-    '<button type="button" id="voiceModeBtn" class="mode-btn">🎙️ Talk to Expert</button>';
+    '<button type="button" id="voiceModeBtn" class="mode-btn">🎙️ Talk to GoodScore Voice Agent</button>';
   phoneTop.appendChild(toggleWrap);
   const chatModeBtn = document.getElementById("chatModeBtn");
   const voiceModeBtn = document.getElementById("voiceModeBtn");
 
-  // Step 2: inject the call panel (hidden until "Talk to Expert" is picked).
+  // Step 2: inject the call panel (hidden until "Talk to GoodScore Voice Agent" is picked).
   const panel = document.createElement("div");
   panel.id = "voicePanel";
   panel.className = "voice-panel";
