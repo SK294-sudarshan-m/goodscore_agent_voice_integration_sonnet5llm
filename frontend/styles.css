@@ -21,7 +21,7 @@ body {
 }
 .app {
   display: grid;
-  grid-template-columns: 1fr 480px;
+  grid-template-columns: 1fr;
   height: 100vh;
 }
  
@@ -209,10 +209,13 @@ body {
 #send:hover { background: var(--gs-green-d); }
 #send:disabled { background: #cbd5e1; cursor: not-allowed; }
  
-/* ============ RIGHT TRACE ============ */
+/* ============ RIGHT TRACE (hidden) ============ */
+/* Panel removed from view per explicit request — kept in the DOM (see
+   index.html) and its element ids untouched so app.js's existing
+   traceLog/regionTag references keep working with zero JS changes;
+   this just takes it out of the visible layout. */
 .trace {
-  background: var(--trace-bg); color: #e2e8f0;
-  padding: 28px 26px; display: flex; flex-direction: column; min-height: 0;
+  display: none;
 }
 .trace-head { margin-bottom: 20px; }
 .trace-title { font-size: 16px; font-weight: 800; color: #f1f5f9; }
