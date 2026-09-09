@@ -8,7 +8,11 @@
 // the WebSocket protocol this talks to.
 //
 // Per <language_requirements> no live transcript is shown — only call
-// status (connecting / listening / thinking / speaking).
+// status (connecting / listening / thinking / speaking). (An earlier
+// version of this file added visible captions; removed to match the
+// spec — the WebSocket protocol's transcript/answer_text fields on
+// turn_done still exist server-side for observability, this file just
+// doesn't render them.)
 
 (function () {
   const VOICE_WS_URL = window.VOICE_WS_URL || "ws://localhost:8090/v1/voice/stream";
@@ -50,7 +54,6 @@
     '<line x1="8" y1="23" x2="16" y2="23"></line>' +
     "</svg></button>" +
     '<div class="voice-hint" id="voiceHint">Hold the mic and speak, then release</div>' +
-    '<div class="voice-captions" id="voiceCaptions"></div>' +
     '<div class="voice-call-id" id="voiceCallId"></div>' +
     '<audio id="voicePlayer" style="display:none"></audio>';
   phone.insertBefore(panel, composerEl);
@@ -60,31 +63,6 @@
   const micBtn = document.getElementById("voiceMicBtn");
   const callIdEl = document.getElementById("voiceCallId");
   const player = document.getElementById("voicePlayer");
-  const captionsEl = document.getElementById("voiceCaptions");
-
-  // Captions are optional, off by the original "no live transcript"
-  // spec — shown here per an explicit later request. They render once,
-  // after the turn completes (see turn_done in the WebSocket protocol),
-  // not word-by-word as the turn happens.
-  function renderCaptions(transcript, answerText) {
-    captionsEl.innerHTML = "";
-    if (transcript) {
-      const you = document.createElement("div");
-      you.className = "voice-caption you";
-      you.textContent = transcript;
-      captionsEl.appendChild(you);
-    }
-    if (answerText) {
-      const bot = document.createElement("div");
-      bot.className = "voice-caption bot";
-      bot.textContent = answerText;
-      captionsEl.appendChild(bot);
-    }
-  }
-
-  function clearCaptions() {
-    captionsEl.innerHTML = "";
-  }
 
   // --- mode toggle -----------------------------------------------------
   function showChatMode() {
@@ -188,7 +166,6 @@
         setStatus("Thinking…");
         break;
       case "turn_done":
-        renderCaptions(msg.transcript, msg.answer_text);
         playAccumulatedAudio();
         break;
       case "turn_cancelled":
@@ -240,7 +217,6 @@
       ws.send(JSON.stringify({ type: "barge_in", turn_id: newTurnId() }));
       stopPlayback();
     }
-    clearCaptions();
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });

@@ -64,13 +64,32 @@ def test_voice_channel_relaxes_chip_mandate_and_forbids_markdown():
 def test_voice_channel_still_contains_chat_ground_rules_verbatim():
     """The voice addendum must not duplicate or override SECTION 1 — it
     only adds new instructions after it. Zero-hallucination and
-    tool-only-answers must be present exactly as in chat.
+    tool-only-account-facts must be present exactly as in chat.
     """
     chat_prompt = build_system_prompt("user-1")
     voice_prompt = build_system_prompt("user-1", channel="voice")
     assert "ZERO HALLUCINATION" in chat_prompt
     assert "ZERO HALLUCINATION" in voice_prompt
-    assert "TOOL-ONLY RESPONSES" in voice_prompt
+    assert "ACCOUNT & GOODSCORE FACTS ARE TOOL-ONLY" in voice_prompt
+
+
+def test_general_financial_questions_are_in_scope_for_both_channels():
+    """General credit-education/personal-finance questions (not about the
+    user's own account) must be answerable from the model's own
+    knowledge in both channels — this is the fix for the gap where the
+    original ground rules blocked anything outside tool/account data.
+    """
+    chat_prompt = build_system_prompt("user-1")
+    voice_prompt = build_system_prompt("user-1", channel="voice")
+    assert "GENERAL FINANCIAL QUESTIONS ARE IN SCOPE" in chat_prompt
+    assert "GENERAL FINANCIAL QUESTIONS ARE IN SCOPE" in voice_prompt
+    assert "General financial education" in chat_prompt
+
+
+def test_voice_addendum_encodes_hinglish_blend_ratio_and_tier34_clarity():
+    voice_prompt = build_system_prompt("user-1", channel="voice")
+    assert "80-85%" in voice_prompt
+    assert "Tier 3/4" in voice_prompt
 
 
 def test_unknown_channel_falls_back_to_chat_prompt():
