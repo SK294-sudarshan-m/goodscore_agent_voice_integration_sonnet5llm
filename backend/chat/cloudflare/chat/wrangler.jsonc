@@ -1,5 +1,5 @@
 {
-  "name": "goodscore-chat",
+  "name": "goodscore-chat-app",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
   // Non-secret config. Fill in GOODSCORE_STAGE_BASE_URL with the
@@ -8,14 +8,17 @@
   // ANTHROPIC_API_KEY is NOT here — it's a secret, set via the
   // dashboard (Settings > Variables and Secrets) or `wrangler secret put`.
   //
-  // IMPORTANT: do NOT rename "name" once this has deployed successfully
-  // once — the container application it creates (name + "-<class_name
-  // lowercased>") gets permanently bound to this Worker's Durable
-  // Object. Renaming it later causes
-  // "DURABLE_OBJECT_ALREADY_HAS_APPLICATION" on the next deploy. The
-  // Worker's actual public URL/dashboard name is independent of this
-  // field and was already assigned when you first connected the repo —
-  // a mismatch between the two is cosmetic and safe to ignore.
+  // IMPORTANT: this "name" field is what actually names the container
+  // application (name + "-<class_name lowercased>", e.g.
+  // "goodscore-chat-app-chatcontainer") — NOT the dashboard/CI-assigned
+  // Worker project name, which is a separate, independent identifier.
+  // Once this has deployed successfully once, do NOT rename it — the
+  // container application gets permanently bound to this Worker's
+  // Durable Object, and renaming causes
+  // "DURABLE_OBJECT_ALREADY_HAS_APPLICATION" (or, if the old container
+  // app is still orphaned in the account, "already an application with
+  // that name... associated with a different durable object
+  // namespace") on the next deploy.
   "vars": {
     "ANTHROPIC_MODEL_ID": "claude-sonnet-5",
     "GOODSCORE_STAGE_BASE_URL": "https://goodscore-agent-voice-integration-sonnet5llm.sudarshan-m.workers.dev",
