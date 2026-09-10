@@ -9,7 +9,7 @@
   // dashboard (Settings > Variables and Secrets) or `wrangler secret put`.
   "vars": {
     "ANTHROPIC_MODEL_ID": "claude-sonnet-5",
-    "GOODSCORE_STAGE_BASE_URL": "REPLACE_WITH_MOCK_API_WORKER_URL",
+    "GOODSCORE_STAGE_BASE_URL": "https://goodscore-agent-voice-integration-sonnet5llm.sudarshan-m.workers.dev",
     "EXTRA_CORS_ORIGIN": "REPLACE_WITH_PAGES_URL"
   },
   "containers": [
