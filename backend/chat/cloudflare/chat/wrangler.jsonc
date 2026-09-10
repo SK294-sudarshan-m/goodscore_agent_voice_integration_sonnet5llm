@@ -1,5 +1,5 @@
 {
-  "name": "goodscore-chat-app",
+  "name": "goodscore-chat-backend",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
   // Non-secret config. Fill in GOODSCORE_STAGE_BASE_URL with the
