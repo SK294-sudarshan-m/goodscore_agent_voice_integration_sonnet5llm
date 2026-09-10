@@ -1,5 +1,5 @@
 {
-  "name": "goodscore-agent-voice-integration-sonnet5llm-voice",
+  "name": "goodscore-voice-backend",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
   // Fill these in with the actual deployed URLs after you've deployed
@@ -12,8 +12,8 @@
   // that's what Cloudflare actually uses to create the container
   // application (name + "-<class_name lowercased>"), regardless of
   // what a build log's "plan" preview implies. Set to
-  // "goodscore-agent-voice-integration-sonnet5llm-voice" to match the
-  // project name chosen at import time. Once deployed successfully,
+  // "goodscore-voice-backend" to match the project name chosen at
+  // import time. Once deployed successfully,
   // do NOT rename it — verify against `wrangler containers list`
   // (STATE: active), not the build log, if this ever seems to
   // disagree.
