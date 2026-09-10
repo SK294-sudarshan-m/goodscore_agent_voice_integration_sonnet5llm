@@ -1,3 +1,7 @@
 # Local virtualenvs and run logs
 .venv_run/
 voice_server.log
+
+# Cloudflare deploy tooling (backend/*/cloudflare/*)
+node_modules/
+.wrangler/

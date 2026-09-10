@@ -1,0 +1,20 @@
+{
+  "name": "goodscore-mock-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-01-01",
+  "containers": [
+    {
+      "class_name": "MockApiContainer",
+      "image": "../../Dockerfile.mock-api",
+      "max_instances": 2
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "MOCK_API_CONTAINER", "class_name": "MockApiContainer" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["MockApiContainer"] }
+  ]
+}

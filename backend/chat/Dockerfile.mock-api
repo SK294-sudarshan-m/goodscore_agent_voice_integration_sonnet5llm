@@ -1,0 +1,29 @@
+# Cloudflare Containers build for the local mock GoodScore staging API
+# (mock_goodscore_api.py) — deployed as its own small public container so
+# BOTH the chat container and the voice container can reach it over the
+# network (they're separate containers/processes once deployed, unlike
+# local dev where they share one machine's localhost).
+#
+# Does not touch mock_goodscore_api.py itself — same file, same behaviour,
+# just a different way of running it. Built by Cloudflare's own CI
+# (Workers Builds) on push — see ../../CLOUDFLARE_DEPLOY.md.
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# Only what mock_goodscore_api.py actually imports (fastapi + its ASGI
+# server) — no need for the full chat requirements.txt here. Same
+# version floor as requirements.txt's fastapi/uvicorn lines.
+RUN pip install --no-cache-dir "fastapi>=0.115" "uvicorn[standard]>=0.30"
+
+COPY mock_goodscore_api.py .
+
+RUN useradd -m -u 1000 appuser
+USER appuser
+
+EXPOSE 8001
+
+CMD ["uvicorn", "mock_goodscore_api:app", "--host", "0.0.0.0", "--port", "8001"]

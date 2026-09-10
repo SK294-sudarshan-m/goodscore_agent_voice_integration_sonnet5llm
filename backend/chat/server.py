@@ -60,12 +60,21 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="GoodScore Support Agent", lifespan=lifespan)
 
 # Enable CORS for frontend integration
+_cors_origins = [
+    "http://ai-assistant-credit.s3-website.ap-south-1.amazonaws.com",
+    "http://localhost:3000",
+    "http://172.16.0.126:3000",
+]
+# Additive: EXTRA_CORS_ORIGIN lets a deployment (e.g. a Cloudflare Pages
+# frontend URL) allow one more origin without editing this list — unset
+# in every existing deployment, so this changes nothing by default.
+_extra_origin = os.environ.get("EXTRA_CORS_ORIGIN")
+if _extra_origin:
+    _cors_origins.append(_extra_origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://ai-assistant-credit.s3-website.ap-south-1.amazonaws.com",
-        "http://localhost:3000",
-        "http://172.16.0.126:3000"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

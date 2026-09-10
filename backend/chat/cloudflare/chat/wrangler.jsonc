@@ -1,0 +1,30 @@
+{
+  "name": "goodscore-chat",
+  "main": "src/index.js",
+  "compatibility_date": "2026-01-01",
+  // Non-secret config. Fill in GOODSCORE_STAGE_BASE_URL with the
+  // mock-api Worker's URL once it's deployed (see ../mock-api), and
+  // EXTRA_CORS_ORIGIN with the Pages frontend URL once that's deployed.
+  // ANTHROPIC_API_KEY is NOT here — it's a secret, set via the
+  // dashboard (Settings > Variables and Secrets) or `wrangler secret put`.
+  "vars": {
+    "ANTHROPIC_MODEL_ID": "claude-sonnet-5",
+    "GOODSCORE_STAGE_BASE_URL": "REPLACE_WITH_MOCK_API_WORKER_URL",
+    "EXTRA_CORS_ORIGIN": "REPLACE_WITH_PAGES_URL"
+  },
+  "containers": [
+    {
+      "class_name": "ChatContainer",
+      "image": "../../Dockerfile.cloudflare",
+      "max_instances": 2
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "CHAT_CONTAINER", "class_name": "ChatContainer" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["ChatContainer"] }
+  ]
+}

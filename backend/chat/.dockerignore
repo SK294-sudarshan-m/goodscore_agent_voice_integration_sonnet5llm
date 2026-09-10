@@ -14,6 +14,8 @@ __pycache__*
 
 # Virtual environments
 .venv/
+.venv_run/
+.venv_test/
 .env
 venv/
 env/

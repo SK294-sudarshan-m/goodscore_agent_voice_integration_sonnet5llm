@@ -1,0 +1,42 @@
+# Cloudflare Containers build for the chat backend, running directly
+# against Anthropic (MODEL_PROVIDER=anthropic) rather than AWS Bedrock/
+# AgentCore — see Dockerfile for the original AWS AgentCore Runtime build,
+# which this does not replace or modify.
+#
+# Differences from Dockerfile that matter here:
+#   - installs requirements-local.txt (adds strands-agents[anthropic]),
+#     not requirements.txt alone — MODEL_PROVIDER=anthropic needs that
+#     extra, and the AgentCore build never sets that provider so never
+#     needed it.
+#   - no aws-opentelemetry-distro / opentelemetry-instrument wrapper —
+#     that exports traces to AWS X-Ray, which isn't reachable (or
+#     wanted) from a Cloudflare Container with no AWS credentials.
+#   - PORT/HOST come from config.py's own env var reads (default 8000),
+#     matched by the Worker's defaultPort in cloudflare/chat/src/index.js.
+#
+# Built by Cloudflare's own CI (Workers Builds, connected to this repo's
+# GitHub URL) on every push to the production branch — not by a local
+# Docker install. See ../../CLOUDFLARE_DEPLOY.md.
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    MODEL_PROVIDER=anthropic \
+    KNOWLEDGE_BASE_MODE=local_dummy \
+    HOST=0.0.0.0 \
+    PORT=8000
+
+COPY requirements.txt requirements-local.txt ./
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-local.txt
+
+COPY . .
+
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
+
+EXPOSE 8000
+
+CMD ["python", "-m", "server"]

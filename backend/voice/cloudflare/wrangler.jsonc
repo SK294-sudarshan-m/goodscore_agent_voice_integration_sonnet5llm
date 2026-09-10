@@ -1,0 +1,38 @@
+{
+  "name": "goodscore-voice",
+  "main": "src/index.js",
+  "compatibility_date": "2026-01-01",
+  // Fill these in with the actual deployed URLs after you've deployed
+  // the chat and mock-api Workers (see ../../chat/cloudflare/).
+  // OPENROUTER_API_KEY is NOT here — it's a secret, set via the
+  // dashboard (Settings > Variables and Secrets) or `wrangler secret put`.
+  "vars": {
+    "CHATBOT_MODE": "local",
+    "CHATBOT_LOCAL_BASE_URL": "REPLACE_WITH_CHAT_WORKER_URL",
+    "GOODSCORE_API_BASE_URL": "REPLACE_WITH_MOCK_API_WORKER_URL",
+    "OPENROUTER_BASE_URL": "https://openrouter.ai/api/v1",
+    "OPENROUTER_STT_MODEL": "nvidia/nemotron-3.5-asr-streaming-multilingual-0.6b",
+    "OPENROUTER_TTS_MODEL": "hexgrad/kokoro-82m",
+    "OPENROUTER_TTS_VOICE": "af_heart",
+    "OPENROUTER_TTS_RESPONSE_FORMAT": "mp3",
+    "VOICE_SUPPORTED_LANGUAGES": "en,hi,hi-en",
+    "VOICE_DEFAULT_LANGUAGE": "hi-en",
+    "VOICE_LANGUAGE_SELECTION_MODE": "auto_stt",
+    "TOKEN_USAGE_LOG_DIR": "/tmp/token_usage_logs"
+  },
+  "containers": [
+    {
+      "class_name": "VoiceContainer",
+      "image": "../Dockerfile",
+      "max_instances": 2
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "VOICE_CONTAINER", "class_name": "VoiceContainer" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["VoiceContainer"] }
+  ]
+}
