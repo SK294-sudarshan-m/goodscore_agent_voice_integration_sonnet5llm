@@ -1,5 +1,5 @@
 {
-  "name": "goodscore-agent-voice-integration-sonnet5llm-chat",
+  "name": "goodscore-chat",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
   // Non-secret config. Fill in GOODSCORE_STAGE_BASE_URL with the
@@ -7,6 +7,15 @@
   // EXTRA_CORS_ORIGIN with the Pages frontend URL once that's deployed.
   // ANTHROPIC_API_KEY is NOT here — it's a secret, set via the
   // dashboard (Settings > Variables and Secrets) or `wrangler secret put`.
+  //
+  // IMPORTANT: do NOT rename "name" once this has deployed successfully
+  // once — the container application it creates (name + "-<class_name
+  // lowercased>") gets permanently bound to this Worker's Durable
+  // Object. Renaming it later causes
+  // "DURABLE_OBJECT_ALREADY_HAS_APPLICATION" on the next deploy. The
+  // Worker's actual public URL/dashboard name is independent of this
+  // field and was already assigned when you first connected the repo —
+  // a mismatch between the two is cosmetic and safe to ignore.
   "vars": {
     "ANTHROPIC_MODEL_ID": "claude-sonnet-5",
     "GOODSCORE_STAGE_BASE_URL": "https://goodscore-agent-voice-integration-sonnet5llm.sudarshan-m.workers.dev",

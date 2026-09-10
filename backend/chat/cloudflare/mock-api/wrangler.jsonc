@@ -1,7 +1,15 @@
 {
-  "name": "goodscore-agent-voice-integration-sonnet5llm",
+  "name": "goodscore-mock-api",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
+  // IMPORTANT: do NOT rename "name" once this has deployed successfully
+  // once — the container application it creates (name + "-<class_name
+  // lowercased>") gets permanently bound to this Worker's Durable
+  // Object. Renaming it later causes
+  // "DURABLE_OBJECT_ALREADY_HAS_APPLICATION" on the next deploy. The
+  // Worker's actual public URL/dashboard name is independent of this
+  // field and was already assigned when you first connected the repo —
+  // a mismatch between the two is cosmetic and safe to ignore.
   "containers": [
     {
       "class_name": "MockApiContainer",
