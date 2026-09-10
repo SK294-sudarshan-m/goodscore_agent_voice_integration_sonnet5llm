@@ -1,5 +1,5 @@
 {
-  "name": "goodscore-voice",
+  "name": "goodscore-agent-voice-integration-sonnet5llm-voice",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
   // Fill these in with the actual deployed URLs after you've deployed
@@ -7,17 +7,16 @@
   // OPENROUTER_API_KEY is NOT here — it's a secret, set via the
   // dashboard (Settings > Variables and Secrets) or `wrangler secret put`.
   //
-  // IMPORTANT: this "name" field is what actually names the container
-  // application (name + "-<class_name lowercased>", e.g.
-  // "goodscore-voice-voicecontainer") — NOT the dashboard/CI-assigned
-  // Worker project name, which is a separate, independent identifier.
-  // Once this has deployed successfully once, do NOT rename it — the
-  // container application gets permanently bound to this Worker's
-  // Durable Object, and renaming causes
-  // "DURABLE_OBJECT_ALREADY_HAS_APPLICATION" (or, if the old container
-  // app is still orphaned in the account, "already an application with
-  // that name... associated with a different durable object
-  // namespace") on the next deploy.
+  // IMPORTANT: "name" must exactly match the Worker's dashboard/CI-
+  // assigned project name (set when you first connect the repo) —
+  // that's what Cloudflare actually uses to create the container
+  // application (name + "-<class_name lowercased>"), regardless of
+  // what a build log's "plan" preview implies. Set to
+  // "goodscore-agent-voice-integration-sonnet5llm-voice" to match the
+  // project name chosen at import time. Once deployed successfully,
+  // do NOT rename it — verify against `wrangler containers list`
+  // (STATE: active), not the build log, if this ever seems to
+  // disagree.
   "vars": {
     "CHATBOT_MODE": "local",
     "CHATBOT_LOCAL_BASE_URL": "https://goodscore-chat-backend.sudarshan-m.workers.dev",
