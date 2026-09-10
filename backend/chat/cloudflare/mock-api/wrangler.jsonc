@@ -1,5 +1,5 @@
 {
-  "name": "goodscore-mock-api",
+  "name": "goodscore-agent-voice-integration-sonnet5llm",
   "main": "src/index.js",
   "compatibility_date": "2026-01-01",
   "containers": [
